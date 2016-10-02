@@ -11,7 +11,7 @@ import {
   GOOGLE_TOKEN_STORE_NAME
 } from './constants';
 
-import { IUnverifiedToken, IVerifiedToken, TOKEN_STORE, ITokenStoreService } from '../token/token.module';
+import { IUnverifiedToken, IVerifiedToken, TokenStoreService } from '../token/token.module';
 
 export interface ITokenValidation {
   token: IVerifiedToken;
@@ -37,7 +37,7 @@ export class GoogleAuthService {
     @Inject(GOOGLE_AUTH_SCOPE) private scope: string,
     @Inject(GOOGLE_AUTH_VERIFY_TOKEN_URL) private verifyUrl: string,
     @Inject(GOOGLE_TOKEN_STORE_NAME) private tokenStoreName: string,
-    @Inject(TOKEN_STORE) private tokenStore: ITokenStoreService,
+    private tokenStore: TokenStoreService,
     private http: Http
   ) {}
 

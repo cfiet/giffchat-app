@@ -4,23 +4,22 @@ import { Observable } from 'rxjs';
 
 import { IVerifiedToken } from './token';
 
-export interface ITokenStoreService {
-  set(name: string, token: IVerifiedToken): void;
-
-  get(name: string): Observable<IVerifiedToken>;
+export abstract class TokenStoreService {
+  public abstract set(name: string, token: IVerifiedToken): void;
+  public abstract get(name: string): Observable<IVerifiedToken>;
 }
 
 export const LOCAL_STORAGE_PREFIX = 'Storage.Prefix';
 export const TOKEN_STORAGE_PREFIX = 'Token.Storage.Prefix';
-export const TOKEN_STORE = 'Token.Storage';
 
-export class LocalStorageTokenStore implements ITokenStoreService {
+export class LocalStorageTokenStore extends TokenStoreService {
   private localStorage: Storage;
 
   constructor(
     @Inject(LOCAL_STORAGE_PREFIX) private storagePrefix: string,
     @Inject(TOKEN_STORAGE_PREFIX) private tokenStoragePrefix: string
   ) {
+    super();
     this.localStorage = window.localStorage;
   }
 

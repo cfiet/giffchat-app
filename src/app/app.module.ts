@@ -5,8 +5,9 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
+import { GOOGLE_AUTH_CLIENT_ID } from './google/google.module';
 import { appRouter } from './app.routing';
-
+import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { appRouter } from './app.routing';
   ],
   bootstrap: [AppComponent],
   providers: [
+    {provide: GOOGLE_AUTH_CLIENT_ID, useValue: environment.googleClientId},
   ]
 })
 export class AppModule { }

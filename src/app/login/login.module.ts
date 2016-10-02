@@ -13,7 +13,6 @@ export { LoginComponent, GoogleComponent, UserService };
   declarations: [LoginComponent, GoogleComponent],
   exports: [LoginComponent, GoogleComponent],
   providers: [
-    {provide: GOOGLE_AUTH_CLIENT_ID, useValue: '583394613108-l7igdv6vhv2ti676ms9k1jho3oamcgnh.apps.googleusercontent.com'},
     UserService
   ]
 })

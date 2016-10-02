@@ -4,5 +4,6 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  googleClientId: '583394613108-l7igdv6vhv2ti676ms9k1jho3oamcgnh.apps.googleusercontent.com'
 };

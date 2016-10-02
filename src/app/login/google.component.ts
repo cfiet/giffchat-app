@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 
 import { GoogleAuthService, GoogleProfileService, TokenParser, ITokenValidation } from '../google/google.module';
-import { ITokenStoreService, TOKEN_STORE } from '../token/token.module';
 
 @Component({
   selector: 'app-google',

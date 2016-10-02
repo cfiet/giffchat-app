@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 
-import { TOKEN_STORE, ITokenStoreService } from '../token/token.module';
+import { TokenStoreService } from '../token/token.module';
 
 import {
   GOOGLE_PROFILE_URL,
@@ -13,9 +13,9 @@ import {
 export class GoogleProfileService {
 
   constructor(
-    @Inject(TOKEN_STORE) private tokenStorage: ITokenStoreService,
     @Inject(GOOGLE_TOKEN_STORE_NAME) private googleTokenName: string,
     @Inject(GOOGLE_PROFILE_URL) private profileUrl: string,
+    private tokenStorage: TokenStoreService,
     private http: Http
   ) { }
 
