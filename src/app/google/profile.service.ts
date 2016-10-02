@@ -3,11 +3,18 @@ import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 
 import { TokenStoreService } from '../token/token.module';
+import { UserStore } from '../user/user.module';
 
 import {
   GOOGLE_PROFILE_URL,
   GOOGLE_TOKEN_STORE_NAME
 } from './constants';
+
+interface IBasicGoogleUserData {
+  id: string;
+  displayName: string;
+  image: { url: string };
+}
 
 @Injectable()
 export class GoogleProfileService {
@@ -16,6 +23,7 @@ export class GoogleProfileService {
     @Inject(GOOGLE_TOKEN_STORE_NAME) private googleTokenName: string,
     @Inject(GOOGLE_PROFILE_URL) private profileUrl: string,
     private tokenStorage: TokenStoreService,
+    private userStore: UserStore,
     private http: Http
   ) { }
 
@@ -30,7 +38,13 @@ export class GoogleProfileService {
           throw new Error(`${response.statusText}`);
         }
 
-        return response.json();
+        return <IBasicGoogleUserData> response.json();
+      }).map(userData => {
+        this.userStore.setCurrent({
+          id: userData.id,
+          name: userData.displayName,
+          avatarUrl: userData.image.url
+        });
       });
     });
   }

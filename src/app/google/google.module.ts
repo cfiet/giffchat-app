@@ -13,6 +13,7 @@ import {
  } from './constants';
 
 import { TokenModule } from '../token/token.module';
+import { UserModule } from '../user/user.module';
 
 export * from './token.parser';
 export * from './constants';
@@ -20,7 +21,7 @@ export * from './auth.service';
 export * from './profile.service';
 
 @NgModule({
-  imports: [CommonModule, TokenModule],
+  imports: [CommonModule, TokenModule, UserModule],
   declarations: [],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
