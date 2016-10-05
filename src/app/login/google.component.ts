@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { GoogleAuthService, GoogleProfileService, TokenParser, ITokenValidation } from '../google/google.module';
+import { TokenActions, IAppState } from '../shared';
 
 @Component({
   selector: 'app-google',
@@ -20,7 +22,7 @@ export class GoogleComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private authService: GoogleAuthService,
-    private profileService: GoogleProfileService
+    private store: Store<IAppState>
   ) { }
 
   public ngOnInit() {
@@ -29,24 +31,19 @@ export class GoogleComponent implements OnInit, OnDestroy {
       const token = TokenParser.parseString(fragment);
       return this.authService.verify(token);
     }).subscribe(
-      (v) => this.loginCompleted(v),
-      (e) => this.loginFailed(e),
-      () => this.isVerifying = false
+      (v) =>
+        this.store.dispatch({
+          type: TokenActions.STORE,
+          payload: v
+        }),
+      (e) =>
+        console.error(e),
+      () =>
+        this.isVerifying = false
     );
   }
 
   public ngOnDestroy() {
     this.tokenVerification.unsubscribe();
-  }
-
-  public loginCompleted(validation: ITokenValidation) {
-    this.profileService.getCurrentUser().subscribe(
-      (v) => console.log(v),
-      (e) => console.error(e)
-    );
-  }
-
-  public loginFailed(error: Error) {
-    console.error(error);
   }
 }

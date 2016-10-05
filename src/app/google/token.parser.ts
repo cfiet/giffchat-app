@@ -1,6 +1,6 @@
 import { URLSearchParams, QueryEncoder } from '@angular/http';
 
-import { IUnverifiedToken } from '../token/token.module';
+import { IUnverifiedToken } from '../token';
 
 export class TokenParser {
   public static parseObject(value: any): IUnverifiedToken {

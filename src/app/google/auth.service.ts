@@ -11,7 +11,7 @@ import {
   GOOGLE_TOKEN_STORE_NAME
 } from './constants';
 
-import { IUnverifiedToken, IVerifiedToken, TokenStoreService } from '../token/token.module';
+import { IUnverifiedToken, IVerifiedToken } from '../token';
 
 export interface ITokenValidation {
   token: IVerifiedToken;
@@ -37,7 +37,6 @@ export class GoogleAuthService {
     @Inject(GOOGLE_AUTH_SCOPE) private scope: string,
     @Inject(GOOGLE_AUTH_VERIFY_TOKEN_URL) private verifyUrl: string,
     @Inject(GOOGLE_TOKEN_STORE_NAME) private tokenStoreName: string,
-    private tokenStore: TokenStoreService,
     private http: Http
   ) {}
 
@@ -71,7 +70,7 @@ export class GoogleAuthService {
       {name: 'access_token', value: token.value}
     ]);
 
-    const tokenStorage = this.http.get(this.verifyUrl, {
+    return this.http.get(this.verifyUrl, {
       search: params
     }).map(response => {
       if (!response.ok) {
@@ -112,11 +111,5 @@ export class GoogleAuthService {
         }
       };
     });
-
-    tokenStorage.subscribe(validation => {
-      this.tokenStore.set(this.tokenStoreName, validation.token);
-    });
-
-    return tokenStorage;
   }
 }
